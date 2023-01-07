@@ -1,0 +1,42 @@
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>Polyweb: A free-radical polymerisation simulator</title>
+    </head>
+    <body>
+        <div>
+            <h1>Polyweb: A free-radical polymerisation simulator</h1>
+
+            <div>
+                <h3>Initiator concentration</h3>
+                <form>
+                    <input type="radio" id="conc_init" name="initiator" value="10**-6">
+                    <label for="conc_init">10**-6 M</label><br>
+
+                    <input type="radio" id="conc_raft" name="initiator" value="10**-5">
+                    <label for="conc_raft">10**-5 M</label><br>
+                    
+                    <h3>RAFT agent concentration</h3>
+                    <input type="radio" id="conc_init" name="raft" value="0">
+                    <label for="conc_init">0 M</label><br>
+
+                    <input type="radio" id="conc_init" name="raft" value="10**-6">
+                    <label for="conc_init">10**-6 M</label><br>
+
+                    <input type="radio" id="conc_raft" name="raft" value="10**-5">
+                    <label for="conc_raft">10**-5 M</label><br>
+                </form>
+                <button id="myBtn">Run simulation</button>
+            </div>
+
+            <canvas id="chart" width="600" height="200"></canvas>
+            <button id="prevBtn">Previous</button>
+            <button id="nextBtn">Next</button>
+        </div>
+        <div>
+            <p>A web development project developed by Farid Anwar on January 2023.</p>
+        </div>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.1.2/chart.umd.js"></script>
+        <script src="poly.js"></script>
+    </body>
+</html>
