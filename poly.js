@@ -2,7 +2,9 @@ const avogadro = 6.02*10**23;
 
 let conc_mono = 5 * 10**-3;
 let conc_init = [10**-6, 10**-5][0];
+//let conc_init = parseInt(document.getElementById("conc_init").value);
 let conc_raft = [0, 10**-6, 10**-5][0];
+//let conc_raft = parseInt(document.getElementById("conc_raft").value);
 let volume = 10**-12;
 
 const Polysim = {
@@ -49,11 +51,12 @@ function rxn21() {
 
 // Pre-equilibrium reactions
 function rxn31() {
-    let num_R1 = Polysim.Rn.filter(i => i.length > 1);
-    const rdm = Math.floor(Math.random() * num_R1.length);
-    let x = [2] + num_R1[rdm];
+    let R1 = Polysim.Rn.filter(i => i.length > 1);
+    const rdm = Math.floor(Math.random() * R1.length);
+    let x = [2] + R1[rdm];
     Polysim.radTRn.push(x);
-    Polysim.Rn.remove(num_R1[rdm]);
+    let foo = Polysim.Rn.indexOf(R1[rdm]);
+    Polysim.Rn.splice(foo, 1);
     Polysim.numT -= 1;
 }
 
@@ -213,7 +216,7 @@ function choose(items, weights) {
 function run_simulation(maxTime) {
     let time = 0;
     let tenMult = 0;
-    let width = [];
+    //let width = [];
 
     run_reaction(11)
 
@@ -230,13 +233,6 @@ function run_simulation(maxTime) {
                 data: [],
                 }
             ]
-            },
-            options: {
-                scales: {
-                    yAxes: [{
-                        title: 'Label'
-                    }]
-                }
             }
         }
     );
@@ -262,7 +258,7 @@ function run_simulation(maxTime) {
         time += tau
 
         if (time > tenMult * 10) {
-            console.log(time)
+            console.log(`Time: ${time} s`)
             let max_length = Math.max(...Polysim.Rn.map(chain => chain.length)) - 1
 
             let P_n = []
@@ -285,14 +281,16 @@ function run_simulation(maxTime) {
 let alreadyRan = 0;
 
 function start() {
+    //let maxTime = parseInt(document.getElementById("max_time").value);
+    let maxTime = 3600;
     if (!alreadyRan) {
-        run_simulation(3600);
+        run_simulation(maxTime);
         alreadyRan = 1;
     } 
     else {
         console.log("dah run")
         myChart.destroy();
-        run_simulation(3600);
+        run_simulation(maxTime);
     }
     
 };

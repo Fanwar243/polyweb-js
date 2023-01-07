@@ -8,8 +8,8 @@
             <h1>Polyweb: A free-radical polymerisation simulator</h1>
 
             <div>
-                <h3>Initiator concentration</h3>
                 <form>
+                    <h3>Initiator concentration</h3>
                     <input type="radio" id="conc_init" name="initiator" value="10**-6">
                     <label for="conc_init">10**-6 M</label><br>
 
@@ -25,6 +25,10 @@
 
                     <input type="radio" id="conc_raft" name="raft" value="10**-5">
                     <label for="conc_raft">10**-5 M</label><br>
+
+                    <h3>Max simulation time</h3>
+                    <input text="radio" id="max_time" value="3600">
+                    <label for="conc_raft">seconds</label><br>
                 </form>
                 <button id="myBtn">Run simulation</button>
             </div>
@@ -34,7 +38,7 @@
             <button id="nextBtn">Next</button>
         </div>
         <div>
-            <p>A web development project developed by Farid Anwar on January 2023.</p>
+            <p>A web development project developed by Farid Anwar on December 2022.</p>
         </div>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.1.2/chart.umd.js"></script>
         <script src="poly.js"></script>
