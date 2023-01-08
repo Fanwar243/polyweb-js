@@ -1,10 +1,12 @@
 const avogadro = 6.02*10**23;
 
 let conc_mono = 5 * 10**-3;
-let conc_init = [10**-6, 10**-5][0];
-//let conc_init = parseInt(document.getElementById("conc_init").value);
-let conc_raft = [0, 10**-6, 10**-5][0];
-//let conc_raft = parseInt(document.getElementById("conc_raft").value);
+//let conc_init = [10**-6, 10**-5][0];
+let conc_init = parseFloat(document.getElementById("conc_init").value);
+console.log(conc_init)
+//let conc_raft = [0, 10**-6, 10**-5][0];
+let conc_raft = parseFloat(document.getElementById("conc_raft").value);
+console.log(conc_raft)
 let volume = 10**-12;
 
 const Polysim = {
@@ -38,34 +40,35 @@ const Polysim = {
 }
 
 function rxn11() {
-    Polysim.initiator -= 1;
+    Polysim.initiator--;
     Polysim.Rn.push(...[[1], [1]]);
 };
     
 
 function rxn21() {
-    const random_chain = Math.floor(Math.random() * Polysim.Rn.length);
+    let random_chain = Math.floor(Math.random() * Polysim.Rn.length);
+    console.log(Polysim.Rn)
     Polysim.Rn[random_chain].push(0);
-    Polysim.monomer -= 1;
+    Polysim.monomer--;
 }
 
 // Pre-equilibrium reactions
 function rxn31() {
     let R1 = Polysim.Rn.filter(i => i.length > 1);
     const rdm = Math.floor(Math.random() * R1.length);
-    let x = [2] + R1[rdm];
+    let x = [2].concat(R1[rdm]);
     Polysim.radTRn.push(x);
     let foo = Polysim.Rn.indexOf(R1[rdm]);
     Polysim.Rn.splice(foo, 1);
-    Polysim.numT -= 1;
+    Polysim.numT--;
 }
 
 function rxn32() {
     const pp = Math.floor(Math.random() * Polysim.radTRn.length);
-    let u = Polysim.radTRn[pp].slice(1);
+    const u = Polysim.radTRn[pp].slice(1);
     Polysim.Rn.push(u);
     Polysim.radTRn.splice(pp, 1);
-    Polysim.numT += 1
+    Polysim.numT++;
 }
 
 function rxn33() {
@@ -80,9 +83,9 @@ function rxn41() {
     let num_R1 = Polysim.Rn.filter(i => i.length > 1);
     const pp1 = Math.floor(Math.random() * num_R1.length);
     const pp2 = Math.floor(Math.random() * Polysim.TRn.length);
-    Polysim.adduct.push(num_R1[pp1] + Polysim.TRn[pp2]);
+    Polysim.adduct.push(num_R1[pp1].concat(Polysim.TRn[pp2]));
     Polysim.Rn.remove(num_R1[pp1]);
-    Polysim.TRn.splice(pp, 1);
+    Polysim.TRn.splice(pp2, 1);
 }
     
 function rxn42() {
@@ -106,7 +109,7 @@ function rxn51() {
     let num_R1 = Polysim.Rn.filter(i => i.length > 1);
     const pp1 = Math.floor(Math.random() * num_R1.length);
     const pp2 = Math.floor(Math.random() * num_R1.length-1);
-    Polysim.product.push(num_R1[pp1] + num_R1[pp2]);
+    Polysim.product.push(num_R1[pp1].concat(num_R1[pp2]));
     Polysim.Rn.remove(num_R1[pp1]);
     Polysim.Rn.remove(num_R1[pp2]);
 }
@@ -123,7 +126,7 @@ function rxn52() {
 
 function rxn53() {
     const pp = Math.floor(Math.random() * Polysim.adduct.length);
-    Polysim.product.push(Polysim.adduct[pp] + [1]);
+    Polysim.product.push(Polysim.adduct[pp].concat([1]));
     Polysim.Rn.remove([1]);
     Polysim.adduct.splice(pp, 1);
 }
@@ -132,7 +135,7 @@ function rxn54() {
     let num_R1 = Polysim.Rn.filter(i => i.length > 1);
     const pp1 = Math.floor(Math.random() * num_R1.length);
     const pp2 = Math.floor(Math.random() * Polysim.adduct.length);
-    Polysim.product.push(Polysim.adduct[pp2] + num_R1[pp1]);
+    Polysim.product.push(Polysim.adduct[pp2].concat(num_R1[pp1]));
     Polysim.Rn.remove(num_R1[pp1]);
     Polysim.adduct.splice(pp2, 1);
 }
@@ -213,29 +216,29 @@ function choose(items, weights) {
     return items[i];
 };
 
+// Chart
+let myChart = new Chart(
+    document.getElementById('chart'),
+    {
+        type: 'line',
+        data: {
+        labels: [],
+        datasets: [
+            {
+            label: 'P_n against n',
+            data: [],
+            }
+        ]
+        }
+    }
+);
+
 function run_simulation(maxTime) {
     let time = 0;
     let tenMult = 0;
     //let width = [];
 
     run_reaction(11)
-
-    // Chart
-    let myChart = new Chart(
-        document.getElementById('chart'),
-        {
-            type: 'line',
-            data: {
-            labels: [],
-            datasets: [
-                {
-                label: 'P_n against n',
-                data: [],
-                }
-            ]
-            }
-        }
-    );
 
     while (time < maxTime) {
         // calculate rates of each potential reaction and convert them to a numpy array
@@ -267,28 +270,35 @@ function run_simulation(maxTime) {
                     {x: n, y: number_of_R(n) / Polysim.Rn.length}
                 )
             }
-
             // Update plot
             myChart.data.labels = P_n.map(item => item.x);
             myChart.data.datasets[0].data = P_n.map(item => item.y);
-            myChart.update('none')
+            myChart.update('none');
             
-            tenMult += 1;
+            tenMult++;
         }
     }
 }
 
-let alreadyRan = 0;
+/* 
+    PAGE START
+*/
 
+let slider = document.getElementById("max_time");
+let output = document.getElementById("time_output");
+output.innerHTML = slider.value + " seconds";
+slider.oninput = function() {
+    output.innerHTML = this.value + " seconds";
+}
+
+let alreadyRan = 0;
 function start() {
-    //let maxTime = parseInt(document.getElementById("max_time").value);
-    let maxTime = 3600;
+    let maxTime = parseInt(slider.value);
     if (!alreadyRan) {
         run_simulation(maxTime);
         alreadyRan = 1;
     } 
     else {
-        console.log("dah run")
         myChart.destroy();
         run_simulation(maxTime);
     }
