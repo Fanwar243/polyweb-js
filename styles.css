@@ -1,6 +1,6 @@
 :root {
     --primary-color: #FFA69E;
-    --secondary-color: #A9F0D1;
+    --secondary-color: #9effbe;
 }
 
 body {
@@ -10,4 +10,36 @@ body {
 
 #title, #subtitle {
     text-align: center;
+}
+
+#form {
+    border: 1px solid #000000;
+    padding: 1%;
+}
+
+input[type=range]::-webkit-slider-runnable-track {
+    width: 100%;
+    cursor: pointer;
+    background: var(--secondary-color);
+    border-radius: 5px;
+}
+
+input[type=range]::-webkit-slider-thumb {
+    background: var(--primary-color);
+    cursor: pointer;
+    -webkit-appearance: none;
+}
+
+button {
+    border: none;
+    padding: 1%;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: var(--secondary-color);
+}
+
+button:active {
+    background-color: white;
 }
