@@ -114,7 +114,7 @@ class Polysim {
         const pp1 = Math.floor(Math.random() * num_R1.length);
         const pp2 = Math.floor(Math.random() * this.TRn.length);
         this.adduct.push(num_R1[pp1].concat(this.TRn[pp2]));
-        this.Rn.remove(num_R1[pp1]);
+        this.Rn.splice(this.Rn.indexOf(num_R1[pp1]), 1);
         this.TRn.splice(pp2, 1);
     }
         
@@ -140,8 +140,8 @@ class Polysim {
         const pp1 = Math.floor(Math.random() * num_R1.length);
         const pp2 = Math.floor(Math.random() * num_R1.length-1);
         this.product.push(num_R1[pp1].concat(num_R1[pp2]));
-        this.Rn.remove(num_R1[pp1]);
-        this.Rn.remove(num_R1[pp2]);
+        this.Rn.splice(this.Rn.indexOf(num_R1[pp1]), 1);
+        this.Rn.splice(this.Rn.indexOf(num_R1[pp2]), 1);
     }
     
     rxn52() {
@@ -150,14 +150,14 @@ class Polysim {
         const pp2 = Math.floor(Math.random() * num_R1.length-1);
         this.product.push(num_R1[pp1]);
         this.product.push(num_R1[pp2]);
-        this.Rn.remove(num_R1[pp1]);
-        this.Rn.remove(num_R1[pp2]);
+        this.Rn.splice(this.Rn.indexOf(num_R1[pp1]), 1);
+        this.Rn.splice(this.Rn.indexOf(num_R1[pp2]), 1);
     }
     
     rxn53() {
         const pp = Math.floor(Math.random() * this.adduct.length);
         this.product.push(this.adduct[pp].concat([1]));
-        this.Rn.remove([1]);
+        this.Rn.splice(this.Rn.indexOf([1]), 1);
         this.adduct.splice(pp, 1);
     }
     
@@ -166,13 +166,13 @@ class Polysim {
         const pp1 = Math.floor(Math.random() * num_R1.length);
         const pp2 = Math.floor(Math.random() * this.adduct.length);
         this.product.push(this.adduct[pp2].concat(num_R1[pp1]));
-        this.Rn.remove(num_R1[pp1]);
+        this.Rn.splice(this.Rn.indexOf(num_R1[pp1]), 1);
         this.adduct.splice(pp2, 1);
     }
 
     calc_rates() {
         let numR0 = this.Rn.filter(i => i.length == 1).length;
-        let alpha = 1/(avogadro * this.volume); // particle no. to molarity conversion factor [mol.litres^-1]
+        const alpha = 1/(avogadro * this.volume); // particle no. to molarity conversion factor [mol.litres^-1]
         return {
             11: 
                 this.rate_constants["k11"] * 2 * this.initiator*alpha,
