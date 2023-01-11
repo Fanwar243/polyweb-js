@@ -259,7 +259,6 @@ class Polysim {
             time += tau
     
             if (time > tenMult * 10) {
-                console.log(`Time: ${time} s`)
                 let max_length = Math.max(...this.Rn.map(chain => chain.length)) - 1
     
                 let P_n = []
