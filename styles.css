@@ -1,0 +1,13 @@
+:root {
+    --primary-color: #FFA69E;
+    --secondary-color: #A9F0D1;
+}
+
+body {
+    font-family: Helvetica, Arial, sans-serif;
+    background-color: var(--primary-color);
+}
+
+#title, #subtitle {
+    text-align: center;
+}
