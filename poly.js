@@ -294,19 +294,16 @@ slider.oninput = function() {
 
 let alreadyRan = 0;
 function start() {
-
-    simul = new Polysim();
-
     if (!alreadyRan) {
+        simul = new Polysim();
         simul.run_simulation();
         alreadyRan = 1;
-    } 
-    else {
+    } else {
         simul.myChart.destroy();
+        simul = new Polysim();
         simul.run_simulation();
     }
-    
-};
+}
 
 function prev() {
 
