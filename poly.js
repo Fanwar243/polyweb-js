@@ -310,7 +310,10 @@ class Polysim {
 
         // Plot the probability density function and histogram of molecular weight
         let chainLengths = [];
-        for (const chain in this.Rn) chainLengths.push(chain.filter(i => i === 0).length);
+        for (let i = 0; i < this.Rn; i++) {
+            let chain_length = this.Rn[i].filter(j => j === 0).length;
+            chainLengths.push(chain_length);
+        }
         let mean = chainLengths.reduce((partialSum, i) => partialSum + i, 0) / chainLengths.length;
         let absDiff = chainLengths.map(i => (i - mean)**2)
         let stdev = Math.sqrt(absDiff.reduce((partialSum, i) => partialSum + i, 0) / chainLengths.length);
