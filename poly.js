@@ -260,8 +260,8 @@ class Polysim {
             let sum_rates = rates.reduce((partialSum, a) => partialSum + a, 0);
     
             if (sum_rates < 10**-8) {
-                console.log("Reactions stop as total rates equal 0.")
-                break
+                console.log("Reactions stop as total rates equal 0.");
+                break;
             } else {
                 // Choose a reaction from the reaction list with weights determined by their probabilities
                 let probabilities = rates.map(elem => elem / sum_rates);
@@ -272,8 +272,9 @@ class Polysim {
             // Increment time by tau, the time passed from the last reaction
             let rd = Math.random();
             let tau = Math.log(1 / rd) / sum_rates / 3600;
-            time += tau
-    
+            time += tau;
+            
+            // Every ten seconds of simulated time..
             if (time > tenMult * 10) {
                 // let max_length = Math.max(...this.Rn.map(chain => chain.length)) - 1
                 //BUG when max_length = 0, so redefined max_length to remove - 1 for now;
@@ -292,23 +293,28 @@ class Polysim {
 
                 // Store width values for plot
                 let n = [];
-                for (let i = 0; i < P_n.length; i++) n.push(i);
+                for (let i = 0; i < P_n.length; i++) {n.push(i)};
                 let n_mean = n.reduce((partialSum, i) => partialSum + i, 0) / n.length;
                 let foo = n.map((i) => (i - n_mean)**2);
-                for (let i = 0; i < P_n.length; i++) {
-                    foo[i] = foo[i] * P_n[i].y;
-                };
+                for (let i = 0; i < P_n.length; i++) {foo[i] *= P_n[i].y};
                 let W = foo.reduce((partialSum, i) => partialSum + i, 0) / foo.length;
                 width.push({x: tenMult, y: W});
                 
                 tenMult++;
-
             }
         }
         // Update width plot
         this.widthChart.data.labels = width.map(item => item.x);
         this.widthChart.data.datasets[0].data = width.map(item => item.y);
         this.widthChart.update('none');
+
+        // Plot the probability density function and histogram of molecular weight
+        let chainLengths = [];
+        for (const chain in this.Rn) chainLengths.push(chain.filter(i => i === 0).length);
+        let mean = chainLengths.reduce((partialSum, i) => partialSum + i, 0) / chainLengths.length;
+        let absDiff = chainLengths.map(i => (i - mean)**2)
+        let stdev = Math.sqrt(absDiff.reduce((partialSum, i) => partialSum + i, 0) / chainLengths.length);
+        //domain = np.linspace(np.min(chain_lengths), np.max(chain_lengths))
     }
 
 }
