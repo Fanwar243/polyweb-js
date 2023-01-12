@@ -289,7 +289,7 @@ class Polysim {
                 this.myChart.data.labels = P_n.map(item => item.x);
                 this.myChart.data.datasets[0].data = P_n.map(item => item.y);
                 this.myChart.update('none');
-                
+
                 // Store width values for plot
                 let n = [];
                 for (let i = 0; i < P_n.length; i++) n.push(i);
@@ -317,12 +317,11 @@ class Polysim {
     PAGE START
 */
 
+// Parameter controls
 let slider = document.getElementById("max_time");
-let output = document.getElementById("time_output");
-output.innerHTML = slider.value + " seconds";
-slider.oninput = function() {
-    output.innerHTML = this.value + " seconds";
-}
+let label = document.getElementById("time_text");
+label.onchange = () => {slider.value = label.value};
+slider.oninput = () => {label.value = slider.value};
 
 let alreadyRan = 0;
 function start() {

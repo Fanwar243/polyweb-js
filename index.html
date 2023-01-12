@@ -33,13 +33,17 @@
 
                 <h3>Max simulation time</h3>
                 <input type="range" min="1000" max="10000" id="max_time" value="3600">
-                <label id="time_output" for="conc_raft">seconds</label><br>
+                <input type="number" min="1000" max="10000" id="time_text" value="3600">
+                <label for="conc_raft">seconds</label><br>
                 <button id="myBtn">Run simulation</button>
             </div>
-            <h3>Probability of finding a chain of molecular weight, n</h3>
+
+            <h3>Probability of finding a chain of molecular weight n</h3>
             <canvas id="prob_chart" width="600" height="200"></canvas>
-            <h3>Distribution width of chain molecular weight, n</h3>
+
+            <h3>Distribution width of chain molecular weight n</h3>
             <canvas id="width_chart" width="600" height="200"></canvas>
+
             <button id="prevBtn">Previous</button>
             <button id="nextBtn">Next</button>
         </div>
