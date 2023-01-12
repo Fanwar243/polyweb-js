@@ -331,6 +331,7 @@ function start() {
         alreadyRan = 1;
     } else {
         simul.myChart.destroy();
+        simul.widthChart.destroy();
         simul = new Polysim();
         simul.run_simulation();
     }
