@@ -25,6 +25,12 @@ body {
     padding: 2%;
 }
 
+input[type="radio"] {
+    color: var(--secondary-color);
+    cursor: pointer;
+    accent-color: var(--secondary-color);
+}
+
 input[type=range]::-webkit-slider-runnable-track {
     width: 100%;
     cursor: pointer;
