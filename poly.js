@@ -54,7 +54,7 @@ class Polysim {
         }
 
         this.myChart = new Chart(
-            document.getElementById('chart'),
+            document.getElementById('prob_chart'),
             {
                 type: 'line',
                 data: {
@@ -62,6 +62,22 @@ class Polysim {
                 datasets: [
                     {
                     label: 'P_n against n',
+                    data: [],
+                    }
+                ]
+                }
+            }
+        );
+
+        this.widthChart = new Chart(
+            document.getElementById('width_chart'),
+            {
+                type: 'line',
+                data: {
+                labels: [],
+                datasets: [
+                    {
+                    label: 'Width against molecular weight',
                     data: [],
                     }
                 ]
@@ -234,7 +250,7 @@ class Polysim {
     run_simulation() {
         let time = 0;
         let tenMult = 0;
-        //let width = [];
+        let width = [];
     
         this.run_reaction(11)
     
@@ -259,7 +275,9 @@ class Polysim {
             time += tau
     
             if (time > tenMult * 10) {
-                let max_length = Math.max(...this.Rn.map(chain => chain.length)) - 1
+                // let max_length = Math.max(...this.Rn.map(chain => chain.length)) - 1
+                //BUG when max_length = 0, so redefined max_length to remove - 1 for now;
+                let max_length = Math.max(...this.Rn.map(chain => chain.length))
     
                 let P_n = []
                 for (let n = 0; n < max_length; n++) {
@@ -267,15 +285,30 @@ class Polysim {
                         {x: n, y: this.number_of_R(n) / this.Rn.length}
                     )
                 }
-                // Update plot
+                // Update probability plot
                 this.myChart.data.labels = P_n.map(item => item.x);
                 this.myChart.data.datasets[0].data = P_n.map(item => item.y);
                 this.myChart.update('none');
+                
+                // Store width values for plot
+                let n = [];
+                for (let i = 0; i < P_n.length; i++) n.push(i);
+                let n_mean = n.reduce((partialSum, i) => partialSum + i, 0) / n.length;
+                let foo = n.map((i) => (i - n_mean)**2);
+                for (let i = 0; i < P_n.length; i++) {
+                    foo[i] = foo[i] * P_n[i].y;
+                };
+                let W = foo.reduce((partialSum, i) => partialSum + i, 0) / foo.length;
+                width.push({x: tenMult, y: W});
                 
                 tenMult++;
 
             }
         }
+        // Update width plot
+        this.widthChart.data.labels = width.map(item => item.x);
+        this.widthChart.data.datasets[0].data = width.map(item => item.y);
+        this.widthChart.update('none');
     }
 
 }
