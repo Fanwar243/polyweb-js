@@ -14,28 +14,31 @@
             <p>The graph below shows a plot of P(n), the probability of randomly choosing a polymer chain of length n, against n.</p>
             <a href="./theory.html">How it works</a>
             <div id="form">
-                <h3>Initiator concentration</h3>
-                <input type="radio" id="conc_init" name="initiator" value="1e-6" checked="checked">
-                <label for="conc_init">10**-6 M</label><br>
-
-                <input type="radio" id="conc_raft" name="initiator" value="1e-5">
-                <label for="conc_raft">10**-5 M</label><br>
+                <div>
+                    <h3>Initiator concentration</h3>
+                    <input type="radio" id="conc_init" name="initiator" value="1e-6" checked="checked">
+                    <label for="conc_init">10**-6 M</label>
+                    <input type="radio" id="conc_raft" name="initiator" value="1e-5">
+                    <label for="conc_raft">10**-5 M</label>
+                </div>
                 
-                <h3>RAFT agent concentration</h3>
-                <input type="radio" id="conc_init" name="raft" value="0" checked="checked">
-                <label for="conc_init">0 M</label><br>
+                <div>
+                    <h3>RAFT agent concentration</h3>
+                    <input type="radio" id="conc_init" name="raft" value="0" checked="checked">
+                    <label for="conc_init">0 M</label>
+                    <input type="radio" id="conc_init" name="raft" value="1e*-6">
+                    <label for="conc_init">10**-6 M</label>
+                    <input type="radio" id="conc_raft" name="raft" value="1e-5">
+                    <label for="conc_raft">10**-5 M</label><br>
+                </div>    
 
-                <input type="radio" id="conc_init" name="raft" value="1e*-6">
-                <label for="conc_init">10**-6 M</label><br>
-
-                <input type="radio" id="conc_raft" name="raft" value="1e-5">
-                <label for="conc_raft">10**-5 M</label><br>
-
-                <h3>Max simulation time</h3>
-                <input type="range" min="1000" max="10000" id="max_time" value="3600">
-                <input type="number" min="1000" max="10000" id="time_text" value="3600">
-                <label for="conc_raft">seconds</label><br>
-                <button id="myBtn">Run simulation</button>
+                <div>
+                    <h3>Max simulation time</h3>
+                    <input type="range" min="1000" max="10000" id="max_time" value="3600">
+                    <input type="number" min="1000" max="10000" id="time_text" value="3600">
+                    <label for="conc_raft">seconds</label><br>
+                    <button id="myBtn">Run simulation</button>
+                </div>
             </div>
 
             <h3>Probability of finding a chain of molecular weight n</h3>

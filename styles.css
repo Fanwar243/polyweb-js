@@ -14,7 +14,15 @@ body {
 
 #form {
     border: 1px solid #000000;
-    padding: 1%;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    padding: 0 2% 0 2%;
+}
+
+#form div {
+    padding: 2%;
 }
 
 input[type=range]::-webkit-slider-runnable-track {
