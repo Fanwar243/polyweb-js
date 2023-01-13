@@ -15,6 +15,10 @@ function choose(items, weights) {
     return items[i];
 };
 
+function sum(arr) {
+    return arr.reduce((partialSum, i) => partialSum + i, 0);
+}
+
 class Polysim {
 
     constructor() {
@@ -257,7 +261,7 @@ class Polysim {
         while (time < this.maxTime) {
             // calculate rates of each potential reaction and convert them to a numpy array
             let rates = Object.values(this.calc_rates());
-            let sum_rates = rates.reduce((partialSum, a) => partialSum + a, 0);
+            let sum_rates = sum(rates);
     
             if (sum_rates < 10**-8) {
                 console.log("Reactions stop as total rates equal 0.");
@@ -294,10 +298,10 @@ class Polysim {
                 // Store width values for plot
                 let n = [];
                 for (let i = 0; i < P_n.length; i++) {n.push(i)};
-                let n_mean = n.reduce((partialSum, i) => partialSum + i, 0) / n.length;
+                let n_mean = sum(n) / n.length;
                 let foo = n.map((i) => (i - n_mean)**2);
                 for (let i = 0; i < P_n.length; i++) {foo[i] *= P_n[i].y};
-                let W = foo.reduce((partialSum, i) => partialSum + i, 0) / foo.length;
+                let W = sum(foo) / foo.length;
                 width.push({x: tenMult, y: W});
                 
                 tenMult++;
@@ -314,9 +318,9 @@ class Polysim {
             let chain_length = this.Rn[i].filter(j => j === 0).length;
             chainLengths.push(chain_length);
         }
-        let mean = chainLengths.reduce((partialSum, i) => partialSum + i, 0) / chainLengths.length;
+        let mean = sum(chainLengths) / chainLengths.length;
         let absDiff = chainLengths.map(i => (i - mean)**2)
-        let stdev = Math.sqrt(absDiff.reduce((partialSum, i) => partialSum + i, 0) / chainLengths.length);
+        let stdev = Math.sqrt(sum(absDiff) / chainLengths.length);
         //domain = np.linspace(np.min(chain_lengths), np.max(chain_lengths))
     }
 
