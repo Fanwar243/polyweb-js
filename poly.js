@@ -354,19 +354,5 @@ function start() {
     }
 }
 
-function prev() {
-
-}
-
-function next() {
-
-}
-
 const button = document.getElementById("myBtn");
 button.addEventListener("click", start);
-
-const prevBtn = document.getElementById("prevBtn");
-prevBtn.addEventListener("click", prev);
-
-const nextBtn = document.getElementById("nextBtn");
-prevBtn.addEventListener("click", next);
