@@ -19,6 +19,10 @@ function sum(arr) {
     return arr.reduce((partialSum, i) => partialSum + i, 0);
 }
 
+function concToParticles(conc, volume) {
+    return Math.round(conc * volume * avogadro)
+}
+
 class Polysim {
 
     constructor() {
@@ -28,11 +32,11 @@ class Polysim {
         this.volume = 10**-12;
         
         this.maxTime = parseInt(document.getElementById("max_time").value);
-        
-        this.monomer = Math.round(this.conc_mono * this.volume * avogadro);
-        this.initiator_0 = Math.round(this.conc_init * this.volume * avogadro);
-        this.initiator = Math.round(this.conc_init * this.volume * avogadro);
-        this.numT = Math.round(this.conc_raft * this.volume * avogadro);
+
+        this.monomer = concToParticles(this.conc_mono, this.volume);
+        this.initiator_0 = concToParticles(this.conc_init, this.volume);
+        this.initiator = concToParticles(this.conc_init, this.volume);
+        this.numT = concToParticles(this.conc_raft, this.volume);
 
         this.Rn = [];
         this.radTRn = [];
